@@ -1,0 +1,7 @@
+server:
+  servlet:
+    context-path: /aws
+
+logging:
+  level:
+    academy.wakanda: ${LOG_LEVEL:DEBUG}
