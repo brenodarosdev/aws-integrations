@@ -16,4 +16,5 @@ public class AwsConfigProperties {
     private String accesskey;
     private String secretkey;
     private String endpointuri;
+    private String messageTopic;
 }

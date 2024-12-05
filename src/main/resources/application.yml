@@ -9,9 +9,9 @@ logging:
 cloud:
   aws:
     credentials:
-      accessKey: ${AWS_SNS_ACCESS_KEY:teste}
-      secretKey: ${AWS_SNS_SECRET_KEY:teste}
-    stack: false
+      accessKey: ${AWS_SNS_ACCESS_KEY:test}
+      secretKey: ${AWS_SNS_SECRET_KEY:test}
+#    stack: false
     stack.auto: false
     region:
       auto: false
@@ -21,6 +21,8 @@ cloud:
 aws:
   config:
     region: ${AWS_SNS_REGION:us-east-1}
-    accesskey: ${AWS_SNS_ACCESS_KEY:teste}
-    secretkey: ${AWS_SNS_SECRET_KEY:teste}
+    accesskey: ${AWS_SNS_ACCESS_KEY:test}
+    secretkey: ${AWS_SNS_SECRET_KEY:test}
     endpointuri: ${AWS_SNS_ENDPOINT:http://localhost:4566}
+    message-topic: ${AWS_SNS_MESSAGE_TOPIC:arn:aws:sns:us-east-1:000000000000:test-topic}
+#    default-destination: ${AWS_SNS_DEFAULT_DESTINATION:arn:aws:sns:us-east-1:000000000000:test-topic}
