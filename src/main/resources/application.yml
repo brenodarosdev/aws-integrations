@@ -4,7 +4,7 @@ server:
 
 logging:
   level:
-    academy.wakanda: ${LOG_LEVEL:DEBUG}
+    com.aws: ${LOG_LEVEL:DEBUG}
 
 cloud:
   aws:
