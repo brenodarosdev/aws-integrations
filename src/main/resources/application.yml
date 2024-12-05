@@ -24,4 +24,3 @@ aws:
     accesskey: ${AWS_SNS_ACCESS_KEY:teste}
     secretkey: ${AWS_SNS_SECRET_KEY:teste}
     endpointuri: ${AWS_SNS_ENDPOINT:http://localhost:4566}
-    resultadoSessaoTopic: ${AWS_SNS_RESULTADO_SESSAO_TOPIC:text-message-topic}
