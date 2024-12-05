@@ -16,8 +16,8 @@ public class SNSAPI {
 
     @PostMapping("/send-message")
     public void sendMessage(@RequestBody @NonNull String message) {
-        log.debug("[start] API - sendMessage");
+        log.debug("[start] SNSAPI - sendMessage");
         snsService.sendMessage(message);
-        log.debug("[finish] API - sendMessage");
+        log.debug("[finish] SNSAPI - sendMessage");
     }
 }
