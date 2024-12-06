@@ -19,7 +19,7 @@ import java.util.Optional;
 @Log4j2
 @Configuration
 @RequiredArgsConstructor
-public class PublisherConfiguration {
+public class PublisherConfig {
     @Value("${app.aws.endpoint-override:#{null}}")
     private Optional<String> endpointUrl;
     @Value("${cloud.aws.region.static:#{null}}")
