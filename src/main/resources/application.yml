@@ -12,7 +12,7 @@ cloud:
       accessKey: ${AWS_SNS_ACCESS_KEY:test}
       secretKey: ${AWS_SNS_SECRET_KEY:test}
 #    stack: false
-    stack.auto: false
+#    stack.auto: false
     region:
       auto: false
       static: ${AWS_SNS_REGION:us-east-1}

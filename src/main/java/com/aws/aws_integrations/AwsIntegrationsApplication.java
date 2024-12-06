@@ -1,5 +1,6 @@
 package com.aws.aws_integrations;
 
+import io.awspring.cloud.sqs.annotation.SqsListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,4 +11,8 @@ public class AwsIntegrationsApplication {
 		SpringApplication.run(AwsIntegrationsApplication.class, args);
 	}
 
+	@SqsListener("test-queue")
+	public void listen(String message) {
+		System.out.println(message);
+	}
 }
