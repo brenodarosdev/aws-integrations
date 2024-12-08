@@ -27,6 +27,7 @@ public class PublisherConfig {
 
     private final AwsConfigProperties awsSnsProperties;
     private final MessageGroupIdRequestHandler messageGroupIdRequestHandler;
+    private static final String DEFAULT_REGION = "us-east-1";
 
     @Bean
     public AmazonSNS amazonSNS() {
@@ -44,16 +45,21 @@ public class PublisherConfig {
     private void addUrl(AmazonSNSAsyncClientBuilder clientBuilder) {
         endpointUrl
                 .map(url -> new AwsClientBuilder.EndpointConfiguration(url, region.orElse(DEFAULT_REGION)))
-                .ifPresentOrElse(clientBuilder::withEndpointConfiguration, ()-> {
-                    region.ifPresent(clientBuilder::withRegion);
-                });
+                .ifPresentOrElse(clientBuilder::withEndpointConfiguration, ()-> region.ifPresent(clientBuilder::withRegion));
     }
 
     @Bean
     @Autowired
     public NotificationMessagingTemplate notificationMessagingTemplate(AmazonSNS amazonSNS) {
-        return new NotificationMessagingTemplate(amazonSNS);
+        NotificationMessagingTemplate messagingTemplate = new NotificationMessagingTemplate(amazonSNS);
+        addDefaultDestination(messagingTemplate);
+        return messagingTemplate;
     }
-    private static final String DEFAULT_REGION = "us-east-1";
+
+    private void addDefaultDestination(NotificationMessagingTemplate messagingTemplate) {
+        if (messagingTemplate.getDefaultDestination() == null) {
+            messagingTemplate.setDefaultDestinationName(awsSnsProperties.getMessageTopic());
+        }
+    }
 }
 

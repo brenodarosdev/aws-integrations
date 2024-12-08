@@ -10,18 +10,15 @@ import org.springframework.stereotype.Component;
 @Log4j2
 @Component
 @RequiredArgsConstructor
-public class SNSInfraPublisher implements SNSPublisher {
+public class SnsInfraPublisher implements SnsPublisher {
     private final NotificationMessagingTemplate snsMessagePublisher;
     private final AwsConfigProperties awsSnsProperties;
 
 
     @Override
-    public void sendMessage(@NonNull String message) {
-        log.debug("[start] SNSInfraPublisher - sendMessage");
-        if (snsMessagePublisher.getDefaultDestination() == null) {
-            snsMessagePublisher.setDefaultDestinationName(awsSnsProperties.getMessageTopic());
-        }
+    public void publishMessage(@NonNull String message) {
+        log.debug("[start] SnsInfraPublisher - sendMessage");
         snsMessagePublisher.sendNotification(awsSnsProperties.getMessageTopic(), message);
-        log.debug("[finish] SNSInfraPublisher - sendMessage");
+        log.debug("[finish] SnsInfraPublisher - sendMessage");
     }
 }
