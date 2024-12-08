@@ -13,7 +13,7 @@ public class MessageGroupIdRequestHandler extends RequestHandler2 {
     public AmazonWebServiceRequest beforeExecution(AmazonWebServiceRequest request) {
         AmazonWebServiceRequest amazonWebServiceRequest = super.beforeExecution(request);
         if (amazonWebServiceRequest instanceof PublishRequest publishRequest) {
-            log.debug("[SENDING] message with value {} to topic {}", publishRequest.getMessage(), publishRequest.getTopicArn());
+            log.debug("[sending] message with value {} to topic {}", publishRequest.getMessage(), publishRequest.getTopicArn());
         }
         return amazonWebServiceRequest;
     }
