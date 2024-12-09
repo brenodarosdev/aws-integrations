@@ -1,7 +1,7 @@
 package com.aws.aws_integrations.topicsAndQueues.infra;
 
-import lombok.NonNull;
+import com.aws.aws_integrations.topicsAndQueues.application.api.MessageRequest;
 
 public interface SnsPublisher {
-    void publishMessage(@NonNull String message);
+    void publishMessage(MessageRequest messageRequest);
 }

@@ -1,65 +1,28 @@
 package com.aws.aws_integrations.config;
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.services.sns.AmazonSNS;
-import com.amazonaws.services.sns.AmazonSNSAsync;
-import com.amazonaws.services.sns.AmazonSNSAsyncClientBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.aws.messaging.core.NotificationMessagingTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Optional;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.sns.SnsClient;
 
 @Log4j2
 @Configuration
 @RequiredArgsConstructor
 public class PublisherConfig {
-    @Value("${app.aws.endpoint-override:#{null}}")
-    private Optional<String> endpointUrl;
-    @Value("${cloud.aws.region.static:#{null}}")
-    private Optional<String> region;
 
     private final AwsConfigProperties awsSnsProperties;
-    private final MessageGroupIdRequestHandler messageGroupIdRequestHandler;
-    private static final String DEFAULT_REGION = "us-east-1";
 
     @Bean
-    public AmazonSNS amazonSNS() {
-        log.debug("[start] PublisherConfiguration - amazonSNS");
-        log.debug("[awsSnsProperties] {}",awsSnsProperties);
-        AmazonSNSAsyncClientBuilder clientBuilder = AmazonSNSAsyncClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(awsSnsProperties.getAccesskey(), awsSnsProperties.getSecretkey())))
-                .withRequestHandlers(messageGroupIdRequestHandler);
-        addUrl(clientBuilder);
-        AmazonSNSAsync clientSNS = clientBuilder.build();
-        log.debug("[finish] PublisherConfiguration - amazonSNS");
-        return clientSNS;
-    }
-
-    private void addUrl(AmazonSNSAsyncClientBuilder clientBuilder) {
-        endpointUrl
-                .map(url -> new AwsClientBuilder.EndpointConfiguration(url, region.orElse(DEFAULT_REGION)))
-                .ifPresentOrElse(clientBuilder::withEndpointConfiguration, ()-> region.ifPresent(clientBuilder::withRegion));
-    }
-
-    @Bean
-    @Autowired
-    public NotificationMessagingTemplate notificationMessagingTemplate(AmazonSNS amazonSNS) {
-        NotificationMessagingTemplate messagingTemplate = new NotificationMessagingTemplate(amazonSNS);
-        addDefaultDestination(messagingTemplate);
-        return messagingTemplate;
-    }
-
-    private void addDefaultDestination(NotificationMessagingTemplate messagingTemplate) {
-        if (messagingTemplate.getDefaultDestination() == null) {
-            messagingTemplate.setDefaultDestinationName(awsSnsProperties.getMessageTopic());
-        }
+    public SnsClient snsClient() {
+        return SnsClient.builder()
+                .region(Region.of(awsSnsProperties.getRegion()))
+                .credentialsProvider(StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create(awsSnsProperties.getAccesskey(), awsSnsProperties.getSecretkey())))
+                .build();
     }
 }
 

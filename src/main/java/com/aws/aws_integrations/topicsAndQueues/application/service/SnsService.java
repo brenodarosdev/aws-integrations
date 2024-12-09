@@ -1,7 +1,7 @@
 package com.aws.aws_integrations.topicsAndQueues.application.service;
 
-import lombok.NonNull;
+import com.aws.aws_integrations.topicsAndQueues.application.api.MessageRequest;
 
 public interface SnsService {
-    void sendMessage(@NonNull String message);
+    void sendMessage(MessageRequest messageRequest);
 }
