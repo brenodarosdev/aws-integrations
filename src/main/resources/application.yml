@@ -6,23 +6,15 @@ logging:
   level:
     com.aws: ${LOG_LEVEL:DEBUG}
 
-cloud:
-  aws:
-    credentials:
-      accessKey: ${AWS_SNS_ACCESS_KEY:test}
-      secretKey: ${AWS_SNS_SECRET_KEY:test}
-#    stack: false
-    stack.auto: false
-    region:
-      auto: false
-      static: ${AWS_SNS_REGION:us-east-1}
-      use-default-aws-region-chain: true
-
-aws:
-  config:
-    region: ${AWS_SNS_REGION:us-east-1}
-    accesskey: ${AWS_SNS_ACCESS_KEY:test}
-    secretkey: ${AWS_SNS_SECRET_KEY:test}
-    endpointuri: ${AWS_SNS_ENDPOINT:http://localhost:4566}
-    message-topic: ${AWS_SNS_MESSAGE_TOPIC:arn:aws:sns:us-east-1:000000000000:test-topic}
-#    default-destination: ${AWS_SNS_DEFAULT_DESTINATION:arn:aws:sns:us-east-1:000000000000:test-topic}
+spring:
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_SNS_ACCESS_KEY}
+        secret-key: ${AWS_SNS_SECRET_KEY}
+      sns:
+        region: ${AWS_SNS_REGION:us-east-1}
+        endpoint: ${AWS_SNS_ENDPOINT:http://localhost:4566}
+      sqs:
+        region: ${AWS_SQS_REGION:us-east-1}
+        endpoint: ${AWS_SQS_ENDPOINT:http://localhost:4566}

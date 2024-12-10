@@ -6,4 +6,9 @@ import lombok.Value;
 public class MessageRequest {
     String message;
     String messageGroupId;
+
+    public MessageRequest(String message, String messageGroupId) {
+        this.message = message;
+        this.messageGroupId = messageGroupId;
+    }
 }

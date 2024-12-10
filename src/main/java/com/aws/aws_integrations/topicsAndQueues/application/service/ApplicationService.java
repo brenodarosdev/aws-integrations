@@ -1,21 +1,20 @@
 package com.aws.aws_integrations.topicsAndQueues.application.service;
 
 import com.aws.aws_integrations.topicsAndQueues.application.api.MessageRequest;
-import com.aws.aws_integrations.topicsAndQueues.infra.SnsPublisher;
+import com.aws.aws_integrations.topicsAndQueues.infra.Infra;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Service;
 
 @Log4j2
-@Service
+@org.springframework.stereotype.Service
 @RequiredArgsConstructor
-public class SnsApplicationService implements SnsService {
-    private final SnsPublisher snsPublisher;
+public class ApplicationService implements Service {
+    private final Infra infra;
 
     @Override
     public void sendMessage(MessageRequest messageRequest) {
         log.debug("[start] SnsApplicationService - sendMessage");
-        snsPublisher.publishMessage(messageRequest);
+        infra.publishMessage(messageRequest);
         log.debug("[finish] SnsApplicationService - sendMessage");
     }
 }
