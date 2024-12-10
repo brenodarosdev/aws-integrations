@@ -14,7 +14,5 @@ spring:
         secret-key: ${AWS_SNS_SECRET_KEY}
       sns:
         region: ${AWS_SNS_REGION:us-east-1}
-        endpoint: ${AWS_SNS_ENDPOINT:http://localhost:4566}
       sqs:
         region: ${AWS_SQS_REGION:us-east-1}
-        endpoint: ${AWS_SQS_ENDPOINT:http://localhost:4566}
