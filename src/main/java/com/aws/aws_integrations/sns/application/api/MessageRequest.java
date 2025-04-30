@@ -1,4 +1,4 @@
-package com.aws.aws_integrations.topicsAndQueues.application.api;
+package com.aws.aws_integrations.sns.application.api;
 
 import lombok.Value;
 
