@@ -1,6 +1,5 @@
 package com.aws.aws_integrations.sns.infra;
 
-import com.aws.aws_integrations.sns.application.api.MessageRequest;
 import io.awspring.cloud.sns.core.SnsNotification;
 import io.awspring.cloud.sns.core.SnsOperations;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +15,14 @@ public class SnsAwsInfra implements SnsInfra {
     private final SnsOperations snsOperations;
 
     @Override
-    public void sendNotification(MessageRequest messageRequest) {
+    public <T> void sendNotification(String groupId, T payload, String topic) {
         log.info("[start] SnsAwsInfra - sendNotification");
-        SnsNotification<MessageRequest> notification = SnsNotification.builder(messageRequest)
+        SnsNotification<T> notification = SnsNotification.builder(payload)
                 .deduplicationId(UUID.randomUUID().toString())
-                .groupId(messageRequest.getMessageGroupId())
+                .groupId(groupId)
                 .build();
-        snsOperations.sendNotification("test-topic.fifo", notification);
-        log.debug("[sent] Notification with value \"{}\" to topic \"{}\"", messageRequest.toString(), "test-topic.fifo");
+        snsOperations.sendNotification(topic, notification);
+        log.debug("[sent] Notification with value \"{}\" to topic \"{}\"", payload.toString(), topic);
         log.debug("[finish] SnsAwsInfra - sendNotification");
     }
 }

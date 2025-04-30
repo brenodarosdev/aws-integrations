@@ -21,6 +21,6 @@ spring:
 
 aws:
   topic:
-    test: ${AWS_TOPIC_TEST:test-topic.fifo}
+    sns-sqs-flow: ${AWS_TOPIC_SNS_SQS_FLOW:sns-sqs-flow-topic.fifo}
   queue:
-    test: ${AWS_QUEUE_TEST:test-queue.fifo}
+    sns-sqs-flow: ${AWS_QUEUE_SNS_SQS_FLOW:sns-sqs-flow-queue.fifo}
