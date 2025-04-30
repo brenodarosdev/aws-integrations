@@ -1,18 +1,26 @@
 server:
   servlet:
-    context-path: /aws
+    context-path: /aws-integrations/api
 
 logging:
   level:
     com.aws: ${LOG_LEVEL:DEBUG}
 
 spring:
+  profiles:
+    active: ${APP_PROFILE:local}
   cloud:
     aws:
       credentials:
-        access-key: ${AWS_SNS_ACCESS_KEY}
-        secret-key: ${AWS_SNS_SECRET_KEY}
+        access-key: ${AWS_SNS_ACCESS_KEY:test}
+        secret-key: ${AWS_SNS_SECRET_KEY:test}
       sns:
         region: ${AWS_SNS_REGION:us-east-1}
       sqs:
         region: ${AWS_SQS_REGION:us-east-1}
+
+aws:
+  topic:
+    test: ${AWS_TOPIC_TEST:test-topic.fifo}
+  queue:
+    test: ${AWS_QUEUE_TEST:test-queue.fifo}

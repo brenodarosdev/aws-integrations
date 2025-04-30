@@ -1,9 +1,8 @@
 services:
   localstack:
-    container_name: "${LOCALSTACK_DOCKER_NAME:-localstack_test}"
     image: localstack/localstack
     ports:
-      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4566:4566"
     environment:
       # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
       - SERVICES=sns, sqs
@@ -11,5 +10,8 @@ services:
       - PERSISTENCE=${PERSISTENCE:-true}
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
-      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "aws_integrations:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+
+volumes:
+    aws_integrations:
