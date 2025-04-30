@@ -17,8 +17,8 @@ public class SnsController {
 
     @PostMapping("/sns-to-sqs")
     public void postNotificationSnsSqsFlow(@RequestBody MessageRequest messageRequest) {
-        log.info("[start] SnsController - postNotificationFlowSnsSqs");
+        log.info("[start] SnsController - postNotificationSnsSqsFlow");
         snsService.sendNotificationSnsSqsFlow(messageRequest);
-        log.debug("[finish] SnsController - postNotificationFlowSnsSqs");
+        log.debug("[finish] SnsController - postNotificationSnsSqsFlow");
     }
 }
